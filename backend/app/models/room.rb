@@ -1,6 +1,7 @@
 class Room < ApplicationRecord
   has_many :messages
-  has_many :vote_rounds, dependent: :destroy  
+  has_many :vote_rounds, dependent: :destroy
+  has_one :question_instance, dependent: :destroy  
 
   after_create :create_initial_vote_round
 
