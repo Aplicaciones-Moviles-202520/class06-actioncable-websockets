@@ -1,68 +1,58 @@
 // src/components/RoomsDialog.jsx
-import { useEffect, useState } from 'react';
-import { Box, Button, Input, Text, List, ListItem } from '@chakra-ui/react';
+import React, { useState, useEffect } from 'react';
 import api from '../api';  // Importa la instancia de Axios
-import ChatRoom from './ChatRoom'; // Importamos el componente ChatRoom
 
-const RoomsDialog = ({ user }) => {
+const RoomsDialog = ({ user, onRoomSelected }) => {
   const [rooms, setRooms] = useState([]);
-  const [newRoomName, setNewRoomName] = useState('');
-  const [error, setError] = useState('');
-  const [selectedRoom, setSelectedRoom] = useState(null); // Estado para la sala seleccionada
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
+    // Función para cargar las salas desde la API
     const fetchRooms = async () => {
       try {
-        const response = await api.get('/v1/rooms');
+        const response = await api.get('/v1/rooms'); // Cambia la URL según tu API
         setRooms(response.data);
-      } catch (error) {
-        setError('Error al obtener las salas. Inténtalo nuevamente.');
+        setLoading(false);
+      } catch (err) {
+        setError('Error al cargar las salas');
+        setLoading(false);
       }
     };
-    fetchRooms();
+
+    fetchRooms(); // Llamada a la función para cargar las salas cuando se monta el componente
   }, []);
 
-  const handleCreateRoom = async () => {
-    try {
-      const response = await api.post('/v1/rooms', { name: newRoomName });
-      setRooms([...rooms, response.data]); // Agrega la nueva sala a la lista
-      setNewRoomName('');
-    } catch (error) {
-      setError('Error al crear la sala. Inténtalo nuevamente.');
-    }
+  const handleRoomClick = (room) => {
+    onRoomSelected(room); // Notifica al componente padre la selección de la sala
   };
 
-  if (selectedRoom) {
-    // Si el usuario selecciona una sala, mostramos el componente ChatRoom
-    return <ChatRoom user={user} room={selectedRoom} />;
+  if (loading) {
+    return <div>Cargando salas...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
   }
 
   return (
-    <Box p={4}>
-      <Text mb={4}>Bienvenido, {user.nickname}. Elige una sala para unirte o crea una nueva:</Text>
-      
-      <Input
-        placeholder="Nombre de la nueva sala"
-        value={newRoomName}
-        onChange={(e) => setNewRoomName(e.target.value)}
-        mb={4}
-      />
-      <Button onClick={handleCreateRoom} colorScheme="teal" mb={4}>
-        Crear Sala
-      </Button>
-
-      {error && <Text color="red.500" mt={2}>{error}</Text>}
-
-      <List spacing={3}>
-        {rooms.map((room) => (
-          <ListItem key={room.id}>
-            <Button onClick={() => setSelectedRoom(room)} colorScheme="blue">
-              Unirse a {room.name}
-            </Button>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
+    <div>
+      <h2>Bienvenido, {user.nickname}</h2>
+      <h3>Elige una sala para unirte:</h3>
+      {rooms.length === 0 ? (
+        <p>No hay salas disponibles.</p>
+      ) : (
+        <ul>
+          {rooms.map((room) => (
+            <li key={room.id}>
+              <button onClick={() => handleRoomClick(room)}>
+                Unirse a {room.name}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 };
 
