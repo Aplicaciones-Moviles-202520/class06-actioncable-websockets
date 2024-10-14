@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_14_151653) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_14_201855) do
   create_table "messages", force: :cascade do |t|
     t.text "content"
     t.integer "user_id", null: false
@@ -35,7 +35,16 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_14_151653) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "vote_rounds", force: :cascade do |t|
+    t.integer "number"
+    t.integer "room_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_vote_rounds_on_room_id"
+  end
+
   add_foreign_key "messages", "messages", column: "parent_message_id"
   add_foreign_key "messages", "rooms"
   add_foreign_key "messages", "users"
+  add_foreign_key "vote_rounds", "rooms"
 end
