@@ -9,6 +9,8 @@
 #   end
 require 'yaml'
 
+User.create(nickname: "Sistema")
+
 # Cargar preguntas desde el archivo de fixtures
 questions_fixture = YAML.load_file(Rails.root.join('test', 'fixtures', 'questions.yml'))
 

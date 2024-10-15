@@ -1,4 +1,4 @@
 class User < ApplicationRecord
-  has_many :messages
-  has_many :choice_votes, dependent: :destroy
+  has_many :room_presences, dependent: :destroy
+  has_many :rooms, through: :room_presences
 end

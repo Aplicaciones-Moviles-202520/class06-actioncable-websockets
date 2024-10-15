@@ -1,4 +1,3 @@
-// src/components/RoomsDialog.jsx
 import React, { useState, useEffect } from 'react';
 import { Box, Button, Input, List, ListItem, Heading, Text, Spinner, FormControl, FormLabel } from '@chakra-ui/react';
 import api from '../api';  // Importa la instancia de Axios
@@ -27,11 +26,17 @@ const RoomsDialog = ({ user, onRoomSelected }) => {
 
   const handleRoomClick = async (room) => {
     try {
-      // Realiza la solicitud al backend para obtener el room completo con todas las asociaciones
+      // Primero, actualiza la presencia del usuario en la sala
+      await api.post('/v1/room_presences', {
+        user_id: user.id,
+        room_id: room.id,
+      });
+
+      // Después, obtén la sala completa con todas las asociaciones
       const response = await api.get(`/v1/rooms/${room.id}`);
       onRoomSelected(response.data); // Notifica al componente padre con el room completo
     } catch (err) {
-      setError('Error al cargar la sala seleccionada');
+      setError('Error al unirse a la sala');
     }
   };
 

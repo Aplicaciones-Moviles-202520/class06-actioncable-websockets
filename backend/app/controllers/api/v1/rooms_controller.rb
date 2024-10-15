@@ -12,8 +12,9 @@ module API
 
       # GET /api/v1/rooms/:id
       def show
+        @room = Room.find(params[:id])
         render json: @room, include: {
-          messages: {},
+          messages: { include: :user },
           question_instance: {
             include: {
               question: {
@@ -21,7 +22,7 @@ module API
               }
             }
           },
-          vote_rounds: {}  # Incluye las rondas de votación
+          vote_rounds: {}
         }
       end
 
