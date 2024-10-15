@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Input, List, ListItem, Heading, Text, Spinner, FormControl, FormLabel } from '@chakra-ui/react';
+import { Button, Box, Input, Heading, Text, Spinner, FormControl, FormLabel, Card, CardBody, Stack } from '@chakra-ui/react';
 import api from '../api';  // Importa la instancia de Axios
 
 const RoomsDialog = ({ user, onRoomSelected }) => {
@@ -67,26 +67,37 @@ const RoomsDialog = ({ user, onRoomSelected }) => {
 
       {/* Mostrar solo si hay salas disponibles */}
       {rooms.length > 0 && (
-        <Text mb={4}>Elige una sala para unirte:</Text>
+        <Text mb={2}>Elige una sala para unirte:</Text>
       )}
 
       {/* Lista de salas */}
       {rooms.length === 0 ? (
         <Text>No hay salas disponibles.</Text>
       ) : (
-        <List spacing={3}>
+        <Stack spacing={2}>
           {rooms.map((room) => (
-            <ListItem key={room.id}>
-              <Button onClick={() => handleRoomClick(room)} colorScheme="blue" w="100%">
-                Unirse a {room.name}
-              </Button>
-            </ListItem>
+            <Card
+              key={room.id}
+              borderWidth="1px"
+              borderRadius="md"
+              overflow="hidden"
+              p={2}
+              cursor="pointer"
+              _hover={{ bg: 'gray.100' }}
+              onClick={() => handleRoomClick(room)}
+            >
+              <CardBody p={2}>
+                <Heading as="h4" size="sm">
+                  {room.name}
+                </Heading>
+              </CardBody>
+            </Card>
           ))}
-        </List>
+        </Stack>
       )}
 
       {/* Campo para crear una nueva sala */}
-      <FormControl mt={6} as="form" onSubmit={handleCreateRoom}>
+      <FormControl mt={4} as="form" onSubmit={handleCreateRoom}>
         <FormLabel>Crear nueva sala</FormLabel>
         <Input
           type="text"
@@ -94,8 +105,9 @@ const RoomsDialog = ({ user, onRoomSelected }) => {
           onChange={(e) => setNewRoomName(e.target.value)}
           placeholder="Nombre de la nueva sala"
           mb={2}
+          size="sm"
         />
-        <Button type="submit" colorScheme="green" w="100%">
+        <Button type="submit" colorScheme="green" w="100%" size="sm">
           Crear sala
         </Button>
       </FormControl>

@@ -4,13 +4,10 @@ import { Box, Button, Input, Text, VStack } from '@chakra-ui/react';
 import api from '../api';  // Importa la instancia de Axios
 import * as ActionCable from '@rails/actioncable';
 
-const ChatRoom = ({ user, room }) => {
+const ChatRoom = ({ user, room, onRoomUpdate }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [error, setError] = useState('');
-
-  // Construir la URL del WebSocket
-  const websocketUrl = `${import.meta.env.VITE_BACKEND_SCHEMA}://${import.meta.env.VITE_BACKEND_HOST}:${import.meta.env.VITE_BACKEND_PORT}/${import.meta.env.VITE_WEBSOCKET_PATH}`;
 
   useEffect(() => {
     // Llamada inicial para obtener todos los mensajes de la sala
@@ -30,8 +27,18 @@ const ChatRoom = ({ user, room }) => {
       { channel: 'RoomChannel', room_id: room.id },
       {
         received(data) {
-          // Actualizar los mensajes cuando se recibe uno nuevo
-          setMessages((prevMessages) => [...prevMessages, data.message]);
+          if (data.notification === "Nueva ronda de votación iniciada") {
+
+            // Actualiza el estado de la ronda de votación con los nuevos datos
+            onRoomUpdate({
+              ...room,
+              vote_rounds: [...room.vote_rounds, data.vote_round]
+            });
+          }
+          else {
+            // Actualizar los mensajes cuando se recibe uno nuevo
+            setMessages((prevMessages) => [...prevMessages, data.message]);
+          }
         },
       }
     );
@@ -40,7 +47,7 @@ const ChatRoom = ({ user, room }) => {
     return () => {
       subscription.unsubscribe();
     };
-  }, [room.id]);
+  }, [room.id, onRoomUpdate]);
 
   const handleSendMessage = async () => {
     if (newMessage.trim() === '') {

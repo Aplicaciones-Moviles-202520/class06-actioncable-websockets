@@ -9,6 +9,10 @@ const VoteDialog = ({ user, question, voteRound }) => {
   const toast = useToast();
 
   useEffect(() => {
+    if (!voteRound || !voteRound.id) {
+      return;
+    }
+
     // Verificar si el usuario ya ha votado en esta ronda de votación
     const fetchVote = async () => {
       setLoading(true); // Iniciar carga
@@ -19,9 +23,15 @@ const VoteDialog = ({ user, question, voteRound }) => {
         if (response.data) {
           setChoiceVote(response.data); // Si ya existe un voto, lo guardamos en el estado
           setSelectedChoiceId(response.data.choice_id); // Actualizamos el selectedChoiceId con el voto
+        } else {
+          // Si no hay voto, reseteamos el estado
+          setChoiceVote(null);
+          setSelectedChoiceId(null);
         }
       } catch (err) {
         console.error("Error fetching vote:", err);
+        setChoiceVote(null);
+        setSelectedChoiceId(null);
       } finally {
         setLoading(false); // Terminar carga
       }

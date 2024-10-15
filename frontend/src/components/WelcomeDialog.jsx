@@ -26,7 +26,7 @@ const WelcomeDialog = ({ onUserCreated }) => {
         onChange={(e) => setNickname(e.target.value)}
       />
       <Button mt={4} onClick={handleSubmit} colorScheme="teal">
-        Crear Usuario
+        Entrar
       </Button>
       {error && <Text color="red.500" mt={2}>{error}</Text>}
     </Box>

@@ -1,16 +1,22 @@
 // src/components/RoomWorkspace.jsx
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { Tabs, Text, TabList, TabPanels, Tab, TabPanel, Box } from '@chakra-ui/react';
 import ChatRoom from './ChatRoom';
 import VoteDialog from './VoteDialog';
 
-const RoomWorkspace = ({ user, room }) => {
+const RoomWorkspace = ({ user, room, onRoomUpdate }) => {
   const questionInstance = room.question_instance;  // Asumiendo que esto se incluye en la respuesta de la API
   
-  // Asegúrate de que vote_rounds esté definido y tenga contenido
-  const latestVoteRound = (room.vote_rounds && room.vote_rounds.length > 0)
-    ? room.vote_rounds.sort((a, b) => b.number - a.number)[0]
-    : null;
+  // Estado para la última ronda de votación
+  const [latestVoteRound, setLatestVoteRound] = useState(1);
+
+  // useEffect para actualizar latestVoteRound cuando room.vote_rounds cambie
+  useEffect(() => {
+    if (room.vote_rounds && room.vote_rounds.length > 0) {
+      const sortedRounds = room.vote_rounds.sort((a, b) => b.number - a.number);
+      setLatestVoteRound(sortedRounds[0]);
+    }
+  }, [room.vote_rounds]);
 
   return (
     <Box p={4}>
@@ -25,7 +31,7 @@ const RoomWorkspace = ({ user, room }) => {
         <TabPanels>
           <TabPanel>
             {/* Contenido de la pestaña "Chat" */}
-            <ChatRoom user={user} room={room} />
+            <ChatRoom user={user} room={room} onRoomUpdate={onRoomUpdate} />
           </TabPanel>
           <TabPanel>
             {/* Placeholder para la funcionalidad de votación */}

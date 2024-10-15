@@ -26,6 +26,10 @@ function App() {
     setSelectedRoom(room);
   };
 
+  const handleRoomUpdate = (updatedRoom) => {
+    setSelectedRoom(updatedRoom); // Actualiza el Room cuando haya cambios
+  };  
+
   const handleLogout = () => {
     setUser(null);
     setSelectedRoom(null);
@@ -36,11 +40,11 @@ function App() {
     <div>
       {/* Topbar */}
       <Flex as="nav" bg="blue.500" p={4} color="white">
-        <Heading as="h3" size="lg">CollabWorkspace</Heading>
+        <Heading as="h4" size="lg">Diskus</Heading>
         <Spacer />
         {user && (
           <Button colorScheme="red" onClick={handleLogout}>
-            Cerrar sesión
+            Salir
           </Button>
         )}
       </Flex>
@@ -50,7 +54,7 @@ function App() {
         {!user ? (
           <WelcomeDialog onUserCreated={handleUserCreated} />
         ) : selectedRoom ? (
-          <RoomWorkspace user={user} room={selectedRoom} />
+          <RoomWorkspace user={user} room={selectedRoom} onRoomUpdate={handleRoomUpdate} />
         ) : (
           <RoomsDialog user={user} onRoomSelected={handleRoomSelected} />
         )}
