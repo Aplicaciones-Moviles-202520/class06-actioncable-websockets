@@ -1,9 +1,44 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  text: MyString
-  question: one
+# Choices for question_one
+choice_one:
+  text: "Asesinar a un chimpancé debería ser considerado homicidio."
+  number: 1
+  question: question_one
 
-two:
-  text: MyString
-  question: two
+choice_two:
+  text: "El asesinato solo aplica a los humanos, por lo que no es homicidio."
+  number: 2
+  question: question_one
+
+choice_three:
+  text: "No lo considero homicidio, pero debería haber una sanción."
+  number: 3
+  question: question_one
+
+choice_four:
+  text: "El asesinato se refiere a humanos, pero la ética animalista debería tratar el caso."
+  number: 4
+  question: question_one
+
+# Choices for question_two
+choice_five:
+  text: "Accionaría la palanca para salvar a las cinco personas, sacrificando a una."
+  number: 1
+  question: question_two
+
+choice_six:
+  text: "No haría nada y dejaría que el tranvía siga su curso."
+  number: 2
+  question: question_two
+
+choice_seven:
+  text: "Buscaría otra forma de salvar a todos, aunque sea poco probable."
+  number: 3
+  question: question_two
+
+choice_eight:
+  text: "Accionaría la palanca solo si conociera a las personas en la vía."
+  number: 4
+  question: question_two
+

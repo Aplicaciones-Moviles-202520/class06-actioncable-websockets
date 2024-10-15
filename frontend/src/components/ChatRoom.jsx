@@ -60,8 +60,10 @@ const ChatRoom = ({ user, room }) => {
 
   return (
     <Box p={4} maxW="lg" borderWidth="1px" borderRadius="lg">
-      <Text mb={4} fontWeight="bold">
-        Sala: {room.name}
+
+      <Text mb={4}>
+        <b>Sala:</b> {room.name}<br />
+        <b>Indicaciones:</b> Discutan la pregunta planteada arriba.
       </Text>
 
       <VStack spacing={4} align="stretch" mb={4}>

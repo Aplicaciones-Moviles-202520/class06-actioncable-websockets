@@ -1,7 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  statement: MyText
+question_one:
+  statement: "El genoma humano tiene 98-99% de similitud con el de los chimpancés. Asesinar a un chimpancé no es homicidio."
 
-two:
-  statement: MyText
+question_two:
+  statement: "Imagina que un tranvía descontrolado avanza por una vía en la que hay cinco personas atadas e incapaces de moverse. Tienes la opción de accionar una palanca que desviará el tranvía hacia otra vía, donde solo hay una persona atada. Si no haces nada, el tranvía seguirá su curso y matará a las cinco personas. Si decides intervenir y tirar de la palanca, salvarás a esas cinco personas, pero la única persona en la otra vía morirá. ¿Qué harías?"

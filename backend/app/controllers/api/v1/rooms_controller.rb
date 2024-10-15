@@ -12,7 +12,17 @@ module API
 
       # GET /api/v1/rooms/:id
       def show
-        render json: @room, include: :messages
+        render json: @room, include: {
+          messages: {},
+          question_instance: {
+            include: {
+              question: {
+                include: :choices
+              }
+            }
+          },
+          vote_rounds: {}  # Incluye las rondas de votación
+        }
       end
 
       # POST /api/v1/rooms
@@ -28,7 +38,11 @@ module API
       private
 
       def set_room
-        @room = Room.find(params[:id])
+        @room = Room.includes(
+          :messages,
+          { question_instance: { question: :choices } }, # Carga los modelos relacionados
+          :vote_rounds
+        ).find(params[:id])
       end
 
       def room_params
