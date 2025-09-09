@@ -1,8 +1,8 @@
-# Laboratorio 11: Aplicaciones Móviles Colaborativas
+# Ejemplo Clase 6: Aplicaciones Móviles Colaborativas
 
 ## Introducción
 
-En este laboratorio veremos una aplicación móvil colaborativa para participación síncrona, enfocada en la discusión basada en preguntas. El usuario crea una sala de discusión con un cierto nombre, y otros usuarios se pueden unir a discutir la pregunta de la sala. Finalmente, los usuarios deben escoger (votar por) una decisión o respuesta en relación a la pregunta planteada. Si los usuarios no están de acuerdo, el sistema se los comunica y deben continuar la discusión. En caso contrario, el sistema comunica a los usuarios la respuesta de consenso.
+En este ejemplo de clases veremos una aplicación móvil colaborativa para participación síncrona, enfocada en la discusión basada en preguntas. El usuario crea una sala de discusión con un cierto nombre, y otros usuarios se pueden unir a discutir la pregunta de la sala. Finalmente, los usuarios deben escoger (votar por) una decisión o respuesta en relación a la pregunta planteada. Si los usuarios no están de acuerdo, el sistema se los comunica y deben continuar la discusión. En caso contrario, el sistema comunica a los usuarios la respuesta de consenso.
 
 El patrón de colaboración anterior corresponde a un micro-guión (_microscript_) de aprendizaje colaborativo (Dillenbourg & Hong, 2008) desarrollado por Cortez et al. (2005), y que luego el profesor de este curso junto con Miguel Nussbaum (Nussbaum et al., 2009) extendieron para hacer que las alternativas en votación fueran construidas por los propios participantes (y no fueran dadas o pre-establecidas). Este _microscript_ ha sido inspiración para muchos desarrollos posteriores en el área de _Computer-Supported Collaborative Learning_ (CSCL).
 
